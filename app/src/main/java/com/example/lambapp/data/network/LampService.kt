@@ -1,10 +1,13 @@
 package com.example.lambapp.data.network
 
+import com.example.lambapp.data.model.ColorRequest
 import com.example.lambapp.data.model.LampColorParam
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface LampService {
 
@@ -22,4 +25,7 @@ interface LampService {
 
     @POST("state/{action}")
     suspend fun updateLampState(@Path("action") action: String): Response<Void>
+
+    @POST("color/")
+    suspend fun changeColor(@Query("color") color: String): Response<Boolean>
 }

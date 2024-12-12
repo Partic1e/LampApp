@@ -1,5 +1,6 @@
 package com.example.lambapp.domain.repository
 
+import com.example.lambapp.data.model.ColorRequest
 import com.example.lambapp.data.model.Lamp
 import com.example.lambapp.data.model.LampColorParam
 
@@ -13,9 +14,9 @@ interface LampRepository {
 
     suspend fun getAllColors() : List<LampColorParam>
 
-    suspend fun updateLampState(lamp: Lamp, action: String) : Boolean
+    suspend fun updateLampState(action: String) : Boolean
 
-    //suspend fun updateLampColor(lamp: Lamp, color: String)
+    suspend fun changeColor(color: String): Boolean
 
     //suspend fun updateLampBrightness(lamp: Lamp, brightness: Int)
 }

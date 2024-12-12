@@ -1,5 +1,7 @@
 package com.example.lambapp.data.repository
 
+import android.util.Log
+import com.example.lambapp.data.model.ColorRequest
 import com.example.lambapp.data.model.Lamp
 import com.example.lambapp.data.model.LampColorParam
 import com.example.lambapp.data.network.LampService
@@ -27,8 +29,18 @@ class LampRepositoryImpl(private val api: LampService) : LampRepository {
         return response.body()!!
     }
 
-    override suspend fun updateLampState(lamp: Lamp, action: String): Boolean {
+    override suspend fun updateLampState(action: String): Boolean {
         val response = api.updateLampState(action)
+        return response.isSuccessful
+    }
+
+    override suspend fun changeColor(color: String): Boolean {
+        val response = api.changeColor(color)
+        if (response.isSuccessful) {
+            Log.d("API", "Color changed successfully")
+        } else {
+            Log.e("API", "Error: ${response.errorBody()?.string()}")
+        }
         return response.isSuccessful
     }
 }
