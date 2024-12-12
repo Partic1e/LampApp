@@ -17,6 +17,9 @@ interface LampService {
     @GET("brightness/current")
     suspend fun getCurrentBrightness(): Response<Int>
 
+    @GET("color/")
+    suspend fun getAllColors(): Response<List<LampColorParam>>
+
     @POST("state/{action}")
     suspend fun updateLampState(@Path("action") action: String): Response<Void>
 }
