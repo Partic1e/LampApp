@@ -1,20 +1,17 @@
 package com.example.lambapp.domain.usecase
 
 import com.example.lambapp.domain.repository.LampRepository
+import javax.inject.Inject
 
 interface GetListOfColorsUseCase {
 
-    suspend operator fun invoke(): List<String>
+    suspend operator fun invoke(): Result<List<String>?>
 }
 
-class GetListOfColorsUseCaseImpl(
+class GetListOfColorsUseCaseImpl @Inject constructor(
     private val lampRepository: LampRepository
 ) : GetListOfColorsUseCase {
 
-    override suspend fun invoke(): List<String> {
-        val colorParamsList = lampRepository.getAllColors()
-        return colorParamsList.map {
-            it.color
-        }
-    }
+    override suspend fun invoke(): Result<List<String>?> =
+        lampRepository.getAllColors()
 }

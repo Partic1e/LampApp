@@ -1,13 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.LampFragment">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#757575"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/display"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/display"
+        android:layout_margin="50dp">
+
+        <TextView
+            android:id="@+id/state"
+            android:text="@string/state"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/display_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/color"
+            android:text="@string/color"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/display_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/brightness"
+            android:text="@string/brightness"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/display_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toTopOf="@id/display"
+        app:layout_constraintBottom_toBottomOf="@id/display"
+        app:layout_constraintStart_toStartOf="@id/display"
+        app:layout_constraintEnd_toEndOf="@id/display"/>
+
+    <ImageView
+        android:id="@+id/error_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/error_image_desc"
+        android:src="@drawable/baseline_block_flipped_24"
+        app:layout_constraintTop_toTopOf="@id/display"
+        app:layout_constraintBottom_toBottomOf="@id/display"
+        app:layout_constraintStart_toStartOf="@id/display"
+        app:layout_constraintEnd_toEndOf="@id/display"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_text"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/error"
+        app:layout_constraintBottom_toBottomOf="@id/display"
+        app:layout_constraintStart_toStartOf="@id/display"
+        app:layout_constraintEnd_toEndOf="@id/display"/>
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
+        android:contentDescription="@string/button_desc"
+        android:background="@drawable/rounded_button"
+        android:src="@drawable/baseline_bolt_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/display" />
+
+    <TextView
+        android:id="@+id/brightness_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/brightness_text"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brightness_text" />
+
+    <TextView
+        android:id="@+id/seekbar_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/counter"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekbar" />
+
+    <TextView
+        android:id="@+id/color_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/color_text"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/text"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekbar_counter" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        android:contentDescription="@string/spinner_desc"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/color_text" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

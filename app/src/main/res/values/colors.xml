@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="text">#FF000000</color>
+    <color name="display_text">#FFFFFFFF</color>
+    <color name="display">#0a0a0a</color>
+    <color name="error">#D00101</color>
 </resources>

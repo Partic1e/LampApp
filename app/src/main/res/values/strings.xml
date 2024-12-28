@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">lambApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="state">state = </string>
+    <string name="color">color = </string>
+    <string name="brightness">brightness = </string>
+    <string name="button_desc">button for turn on/off lamp</string>
+    <string name="brightness_text">Изменить яркость</string>
+    <string name="counter">0</string>
+    <string name="color_text">Изменить цвет</string>
+    <string name="spinner_desc">choose color</string>
+    <string name="error_image_desc">error image</string>
+    <string name="error_text">error</string>
 </resources>

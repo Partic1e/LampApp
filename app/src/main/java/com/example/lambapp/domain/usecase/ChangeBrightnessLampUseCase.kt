@@ -4,15 +4,16 @@ import com.example.lambapp.data.model.Lamp
 import com.example.lambapp.domain.repository.LampRepository
 import javax.inject.Inject
 
-interface ChangeColorLampUseCase {
+interface ChangeBrightnessLampUseCase {
 
     suspend operator fun invoke(lamp: Lamp): Result<Boolean?>
 }
 
-class ChangeColorLampUseCaseImpl @Inject constructor(
+class ChangeBrightnessLampUseCaseImpl @Inject constructor(
     private val lampRepository: LampRepository
-) : ChangeColorLampUseCase {
+) : ChangeBrightnessLampUseCase {
 
-    override suspend operator fun invoke(lamp: Lamp): Result<Boolean?> =
-        lampRepository.changeColor(lamp)
+    override suspend operator fun invoke(lamp: Lamp): Result<Boolean?> {
+        return lampRepository.changeBrightness(lamp)
+    }
 }
