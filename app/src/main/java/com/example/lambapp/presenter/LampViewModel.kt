@@ -32,10 +32,6 @@ class LampViewModel @Inject constructor(
     val colorList: LiveData<UiState<List<String>?>>
         get() = _colorList
 
-    private val _optionsStatus = MutableLiveData<UiState<Boolean?>>(UiState.Loading)
-    val lampOptions: LiveData<UiState<Boolean?>>
-        get() = _optionsStatus
-
     fun loadLampData() {
         viewModelScope.launch {
             _lampLiveData.postValue(UiState.Loading)
@@ -53,24 +49,25 @@ class LampViewModel @Inject constructor(
 
     fun updateLampState(state: String) {
         viewModelScope.launch {
+            _lampLiveData.postValue(UiState.Loading)
             val lamp = (_lampLiveData.value as? UiState.Success)?.value
-            lamp?.state = if (state == "on") LampState.OFF else LampState.ON
-            val result = lamp?.let { changeStateLampUseCase(it) }
-            result?.let {
-                _optionsStatus.postValue(it.toUiState())
+
+            val newState = if (state == "on") LampState.OFF else LampState.ON
+            val result = lamp?.let { changeStateLampUseCase(it.copy(state = newState)) }
+
+            if (result != null && result.isSuccess) {
+                loadLampData()
+            } else {
+                _lampLiveData.postValue(UiState.Failure("Failed to update lamp state"))
             }
         }
-        loadLampData()
     }
 
     fun updateLampColor(color: String) {
         viewModelScope.launch {
             val lamp = (_lampLiveData.value as? UiState.Success)?.value
             lamp?.color = color
-            val result = lamp?.let { changeColorLampUseCase(it) }
-            if (result != null) {
-                _optionsStatus.postValue(result.toUiState())
-            }
+            lamp?.let { changeColorLampUseCase(it) }
         }
         loadLampData()
     }
@@ -79,13 +76,8 @@ class LampViewModel @Inject constructor(
         viewModelScope.launch {
             val lamp = (_lampLiveData.value as? UiState.Success)?.value
             lamp?.brightness = brightness
-            val result = lamp?.let { changeBrightnessLampUseCase(it) }
-            if (result != null) {
-                _optionsStatus.postValue(result.toUiState())
-            }
+            lamp?.let { changeBrightnessLampUseCase(it) }
         }
         loadLampData()
     }
-
-    private fun applyСhanges() {}
 }

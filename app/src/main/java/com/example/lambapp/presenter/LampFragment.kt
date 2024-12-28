@@ -53,10 +53,10 @@ class LampFragment : Fragment(R.layout.fragment_lamp) {
         lampViewModel.loadLampData()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun onDataReceived(lampData: UiState<Lamp?>?) {
         when(lampData) {
             is UiState.Failure -> {
-                Log.e("LampApp", "UI Error: ${lampData.message}")
                 binding.state.visibility = View.GONE
                 binding.color.visibility = View.GONE
                 binding.brightness.visibility = View.GONE
@@ -66,7 +66,6 @@ class LampFragment : Fragment(R.layout.fragment_lamp) {
                 binding.errorText.text = lampData.message
             }
             is UiState.Loading -> {
-                Log.d("LampApp", "Loading data...")
                 binding.state.visibility = View.GONE
                 binding.color.visibility = View.GONE
                 binding.brightness.visibility = View.GONE
@@ -75,20 +74,17 @@ class LampFragment : Fragment(R.layout.fragment_lamp) {
                 binding.errorText.visibility = View.GONE
             }
             is UiState.Success -> {
-                Log.d("LampApp", "Lamp data loaded: ${lampData.value}")
                 binding.state.visibility = View.VISIBLE
                 binding.color.visibility = View.VISIBLE
                 binding.brightness.visibility = View.VISIBLE
                 binding.loading.visibility = View.GONE
                 binding.errorImage.visibility = View.GONE
                 binding.errorText.visibility = View.GONE
-                binding.state.text = lampData.value?.state?.action
-                binding.color.text = lampData.value?.color
-                binding.brightness.text = lampData.value?.brightness?.toString()
+                binding.state.text = "state = ${lampData.value?.state?.action}"
+                binding.color.text = "color = ${lampData.value?.color}"
+                binding.brightness.text = "brightness = ${lampData.value?.brightness?.toString()}"
             }
-            else -> {
-                Log.w("LampApp", "Unexpected state")
-            }
+            else -> {}
         }
     }
 
@@ -134,7 +130,7 @@ class LampFragment : Fragment(R.layout.fragment_lamp) {
     private fun initSeekBar() {
         binding.seekbar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                binding.brightnessText.text = "$progress"
+                binding.seekbarCounter.text = "$progress"
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -145,7 +141,7 @@ class LampFragment : Fragment(R.layout.fragment_lamp) {
 
     private fun initButton() {
         binding.button.setOnClickListener {
-            lampViewModel.updateLampState(binding.state.text.toString())
+            lampViewModel.updateLampState(binding.state.text.toString().substring(8))
         }
     }
 }

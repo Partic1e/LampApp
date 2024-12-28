@@ -17,11 +17,6 @@ class GetLampOptionsUseCaseImpl @Inject constructor(
     override suspend operator fun invoke(): Result<Lamp?> {
 
         val stateResult = lampRepository.getState()
-        val colorResult = lampRepository.getCurrentColor()
-        val brightnessResult = lampRepository.getCurrentBrightness()
-        if (stateResult.isSuccess && stateResult.getOrNull() == null) {
-            lampRepository.getState()
-        }
 
         val errors = mutableListOf<Throwable>()
 
@@ -31,6 +26,17 @@ class GetLampOptionsUseCaseImpl @Inject constructor(
         }?.let { isOn ->
             if (isOn) LampState.ON else LampState.OFF
         }
+        if (state == LampState.OFF) {
+            return if (errors.isEmpty()) {
+                Result.success(Lamp(state = LampState.OFF, color = "empty", brightness = 0))
+            } else {
+                Result.failure(Exception("$errors"))
+            }
+        }
+
+        val colorResult = lampRepository.getCurrentColor()
+        val brightnessResult = lampRepository.getCurrentBrightness()
+
         val color = colorResult.getOrElse {
             errors.add(it)
             null
